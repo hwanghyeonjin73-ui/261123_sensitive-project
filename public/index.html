@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="문장을 입력하면 AI가 긍정·부정·중립을 판단하고 이유를 알려주는 감성 분석기">
+  <meta name="theme-color" content="#121212">
+  <title>감성 분석기</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="stylesheet" href="/css/fonts.css">
+  <link rel="stylesheet" href="/css/style.css">
+  <script type="module" src="/js/app.js"></script>
+</head>
+<body>
+  <main class="page">
+    <header class="site-header">
+      <span class="logo-dot" aria-hidden="true"></span>
+      <span class="logo-text">감성 분석기</span>
+    </header>
+
+    <section class="intro">
+      <h1 id="page-title">텍스트의 감정을 분석해 보세요</h1>
+      <p class="page-desc">문장을 입력하면 AI가 긍정·부정·중립을 판단하고 이유를 알려줘요.</p>
+    </section>
+
+    <form id="sentiment-form" class="card input-card" novalidate>
+      <label for="text-input" class="section-label">분석할 텍스트</label>
+      <textarea id="text-input" name="text" rows="6"
+        placeholder="분석할 문장을 입력해 주세요"
+        aria-describedby="input-error char-count"></textarea>
+
+      <div class="input-meta">
+        <p id="input-error" class="input-error" aria-live="polite"></p>
+        <p id="char-count" class="char-count">0 / 1000</p>
+      </div>
+
+      <div id="example-list" class="example-row">
+        <span class="section-label">예시</span>
+        <!-- 예시 버튼 3개는 app.js가 config.js의 EXAMPLES로 생성 -->
+      </div>
+
+      <div class="action-row">
+        <button type="button" id="clear-button" class="btn btn-outline">지우기</button>
+        <button type="submit" id="analyze-button" class="btn btn-primary">분석하기</button>
+      </div>
+    </form>
+
+    <section id="result-section" class="result-section" aria-live="polite" aria-busy="false">
+      <div id="result-empty" class="card result-empty">
+        <p>텍스트를 입력하고 분석하기를 눌러 주세요.</p>
+      </div>
+
+      <div id="result-loading" class="card result-loading" hidden>
+        <span class="spinner" aria-hidden="true"></span>
+        <p>분석 중이에요…</p>
+      </div>
+
+      <article id="result-card" class="card result-card" hidden>
+        <div class="result-block">
+          <p class="section-label">분석 결과</p>
+          <div class="result-label-row">
+            <span class="result-dot" aria-hidden="true"></span>
+            <p id="result-label" class="result-label"></p>
+          </div>
+        </div>
+
+        <div class="result-block">
+          <div class="confidence-head">
+            <p class="section-label">신뢰도</p>
+            <p id="confidence-value" class="confidence-value"></p>
+          </div>
+          <div id="confidence-bar" class="confidence-bar"
+            role="progressbar" aria-label="신뢰도" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+            <div id="confidence-fill" class="confidence-fill"></div>
+          </div>
+        </div>
+
+        <div class="result-block">
+          <p class="section-label">분석 이유</p>
+          <p id="result-reason" class="result-reason"></p>
+        </div>
+
+        <p class="result-note">AI가 추정한 결과로, 정확하지 않을 수 있어요.</p>
+      </article>
+
+      <div id="error-box" class="error-box" role="alert" hidden>
+        <p class="error-title">분석하지 못했어요</p>
+        <p id="error-message" class="error-message"></p>
+        <button type="button" id="retry-button" class="btn btn-chip" hidden>다시 시도</button>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
